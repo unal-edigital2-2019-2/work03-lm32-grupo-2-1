@@ -12,4 +12,4 @@ Para esta entrega se nos pide:
 ##Diagrama de caja negra del test_cam: 
 
 
-Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, dos son señales de control 
+Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, 2 son señales de control y 2 son cadenas de caracteres  

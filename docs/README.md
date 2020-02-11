@@ -9,5 +9,7 @@
 Para esta entrega se nos pide: 
 - Integrar por medio de Litex el controlador de la cámara.
 
-## De la primera entrega se tiene: 
+##Diagrama de caja negra del test_cam: 
 
+
+Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, dos son señales de control 

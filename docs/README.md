@@ -112,6 +112,95 @@ Al acercar la imágen del segundo frame podemos ver lo siguiente:
 
 Esto lo interpretamos como puntos que quedaron sin información en la memoria ram. Se puede ver a traves de ellos y lo que se ve detras es la imágen del frame anterior.
 
+
+## Tercera Entrega
+Para esta entrega se nos pide: 
+- Integrar por medio de Litex el controlador de la cámara.
+
+### test_cam 
+
+
+#### Diagrama de caja negra 
+
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true" width = "250">
+
+
+Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, 2 son señales de control y 2 son cadenas de caracteres
+que indican la dirección y los datos enviados por la cámara. Las salidas son las señales de sincronización de la VGA, un reloj, el status,
+los datos que se envían a la VGA, data_mem es la salida de los datos y `CAM_reset` y `CAM_pwdw` son pines. 
+
+
+
+### Cam_read
+
+#### Diagrama de caja negra
+
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true" width = "250">
+
+
+### Máquina de estados
+
+### Descripción
+
+Tiene como entradas: `init`, `pclk`, `rst`, `vsync`, `href`, `px_data` y como salidas los registros: `mem_px_addr`, `mem_px_data`, `px_wr` y `done_image`.
+
+Internamente se tienen los siguientes registros: `FSM_state`, `pixel_half`, `temp_rgb`, `widthimage`, `lenghtimage`, `mem_px_RG`, `vsync_old` y `href_old`.
+
+Y los parámetros locales: `Maxwidhtimage`, `Maxlenghtimage`, `WAIT_FRAME_START`, `ROW_CAPTURE`, `DATA_OUT_RANGE`, `DONE`.
+
+Posteriormente, se inicializan los siguientes registros: 
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/init_reg_cam_read.png?raw=true" width = "250">
+
+
+La captura se compone de tres estados que se evaluan cada vez que hay un flanco de subida del `pclk`; enseguida se guardan en los `vsync_old` y `href_old` los valores de `vsync` y `href`, respectivamente; y se inicia un case con FSM_state. 
+
+Para el primer caso `DONE`, si es un flanco de bajada de vsync , se guardan los siguientes valores: 
+```verilog
+mem_px_data <= -1 ;
+px_wr <= 0;
+lenghtimage <=0;
+```
+
+Para el segundo estado `WAIT_FRAME_START`, se espera el flanco de subida en href. Tal y como se dice en la datasheet, cada dos flancos de subida de href se lee un pixel en  RGB565. Para este caso:
+
+```verilog
+px_wr <= 0;
+```
+El último estado es `ROW_CAPTURE`, para el cual se tiene que:
+Si el registro `pixel_half` es igual a 0: 
+
+```verilog
+temp_rgb [15:8] <= px_data;
+px_wr <= 0;
+```
+
+En caso de que  `pixel_half` sea diferente de 0:
+
+```verilog
+mem_px_addr <= mem_px_addr + 1;
+temp_rgb [7:0] <= px_data;
+mem_px_RG <= {temp_rgb[15:13], temp_rgb[10:8]}; 
+mem_px_data <= {mem_px_RG,temp_rgb[4:3]}; 
+px_wr <= 1;
+widthimage <= widthimage + 1;
+```
+Además, en este case también se evalua si se completo toda la captura. Esto se revisa mirando las dimensiones máximas de la imagen que se va a capturar. 
+
+Para esto, primero se mire si la fila ya está completa; en caso de que sea así se tiene: 
+
+```verilog
+widthimage <= 0 ;
+lengthimage <= lengthimage + 1;
+
+```
+
+Después de esto se verifica si las columnas están completas, de ser así:
+
+```verilog
+FSM_state <= DONE; //Regresa al estado DONE 
+done_image <=1; //Indica que ya se hizo la imagen. 
+```
+
 ### Protocolo UART
 
 UART son las siglas de *Universal Asynchronous Receiver-Transmitter* que traducido es **Transmisor Receptor Asíncrono Universal**. Este protocolo es utilizado para comunicación serie entre dispositivos digitales. El UART toma bytes de datos y transmite los bits individuales de forma secuencial. En el destino, un segundo UART reensambla los bits en bytes completos. 
@@ -145,44 +234,3 @@ Cada una de las señales tiene una función:
 - `STB_O` se usa cuando el maestro le quiere hacer saber al esclavo que un envío de datos está el proreso
 - El esclavo le indica al maestro que ya ha recibido los datos a traves de `ACK_O` a `ACK_I` (de esclavo a maestro)
 - Para indicar que los datos han sido capturados o que se ha visto un ciclo, se usa la señal `CYC_O` (de maestro a esclavo)
-
-## Tercera Entrega
-Para esta entrega se nos pide: 
-- Integrar por medio de Litex el controlador de la cámara.
-
-### test_cam 
-
-
-#### Diagrama de caja negra 
-
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true" width = "250">
-
-
-Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, 2 son señales de control y 2 son cadenas de caracteres
-que indican la dirección y los datos enviados por la cámara. Las salidas son las señales de sincronización de la VGA, un reloj, el status,
-los datos que se envían a la VGA, data_mem es la salida de los datos y CAM_reset y CAM_pwdw son pines. 
-
-
-
-### Cam_read
-
-#### Diagrama de caja negra
-
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true" width = "250">
-
-
-### Máquina de estados
-
-### Descripción
-
-Tiene como entradas: init, pclk, rst, vsync, href, px_data y como salidas: los registros, mem_px_addr, mem_px_data, px_wr y done_image.
-
-Internamente se tienen los siguientes registros: FSM_state, piel_half, temp_rgb, widthimage, lenghtimage, mem_px_RG, vsync_old y href_old.
-
-Y los parámetros locales: Maxwidhtimage, Maxlenghtimage, WAIT_FRAME_START, ROW_CAPTURE, DATA_OUT_RANGE, DONE.
-
-Posteriormente, se inicializan los siguientes registros: 
-
-Y cada vez que hay un flanco de subida del pclk, se guardan vsync_old y href_old. Y se inicia un case con FSM_state. 
-
-Para el primer caso, si es un flanco de bajada de vsync , se guarda en m

@@ -19,25 +19,25 @@ Adicional a los módulos que se plantean originalmente se plantean los siguiente
 
 Este módulo busca hacer la captura del dato para pasarlo a la memoria DP_RAM.
 
-Tiene 4 entradas href, pckl, vysnc y data; los tres primeros son clocks y el último es una cadena de 8 caracteres. Además tiene 3 salidas DP_RAM_addr_out, DP_RAM_data_out, DP_RAM_regW; el primero es una cadena de 15 caracteres, el segundo una cadena de 8 caracteres y el tercero es un registro que autoriza la escritura en la DP_RAM. 
+Tiene 4 entradas `href`, `pckl`, `vysnc` y `data`; los tres primeros son clocks y el último es una cadena de 8 caracteres. Además tiene 3 salidas `DP_RAM_addr_out`, `DP_RAM_data_out`, `DP_RAM_regW`; el primero es una cadena de 15 caracteres, el segundo una cadena de 8 caracteres y el tercero es un registro que autoriza la escritura en la DP_RAM. 
 
-Cuenta también con 5 registros FSM_state, pixel_half, temp_rgb, widthimage y  lengthimage; el primero es una cadena de 2 caracteres y indica cuatro posibles estados WAIT_FRAME_STAR (00),DATA_OUT_RANGE(11), DONE (10) y ROW_CAPTURE (01); el segundo indica si se está almacenando medio pixel o uno completo, el tercero es una cadena de 16 caracteres en la cual se guarda el pixel completo asumiendo RGR565, el cuarto lleva el conteo del ancho de pixeles enviados y el último lleva el conteo de filas enviadas. 
+Cuenta también con 5 registros `FSM_state`, `pixel_half`, `temp_rgb`, `widthimage` y  lengthimage; el primero es una cadena de 2 caracteres y indica cuatro posibles estados `WAIT_FRAME_STAR(00)` , `DATA_OUT_RANGE(11)`, `DONE (10)` y  `ROW_CAPTURE (01)`; el segundo indica si se está almacenando medio pixel o uno completo, el tercero es una cadena de 16 caracteres en la cual se guarda el pixel completo asumiendo RGR565, el cuarto lleva el conteo del ancho de pixeles enviados y el último lleva el conteo de filas enviadas. 
 
 ##### Funcionamiento:
 
-Funciona con un flanco de subida del reloj y tiene diferentes casos que depende de FSM_state: 
-- Caso 1: DONE se encarga de enviar la imagen a la memoria y espera otra imagen. 
-- Caso 2: DATA_OUT_RANGE evita que los datos que están fuera del rango de pantalla sean envíados a la memoría. 
-- Caso 3: WAIT_FRAME_START espera por VSYNC
-- Caso 4: ROW_CAPTURE guardar el dato
+Funciona con un flanco de subida del reloj y tiene diferentes casos que depende de `FSM_state`: 
+- Caso 1:  `DONE` se encarga de enviar la imagen a la memoria y espera otra imagen. 
+- Caso 2:   `DATA_OUT_RANGE` evita que los datos que están fuera del rango de pantalla sean envíados a la memoría. 
+- Caso 3:  `WAIT_FRAME_START` espera por VSYNC
+- Caso 4:  `ROW_CAPTURE` guardar el dato
 
-Para el primer caso (DONE) ya se ha llenado la memoria,  sin embargo como la cámara sigue tomando imagenes; por lo tanto, si vsync es igual a 0 se mantiene el valor de acabado, es decir no se ha iniciado el proceso de gardar en memoria una nueva imagen y si no se cumple esto si no que vsync es 1 se inicializan todos los valores de nuevo; se guarda en DP_RAM_regW, en DP_RAM_addr_out y en lengthimage 0; y se inicializa ROW_CAPTURE . 
+Para el primer caso (`DONE`) ya se ha llenado la memoria,  sin embargo como la cámara sigue tomando imagenes; por lo tanto, si vsync es igual a 0 se mantiene el valor de acabado, es decir no se ha iniciado el proceso de gardar en memoria una nueva imagen y si no se cumple esto si no que vsync es 1 se inicializan todos los valores de nuevo; se guarda en  `DP_RAM_regW `, en  `DP_RAM_addr_out ` y en lengthimage 0; y se inicializa  `ROW_CAPTURE ` . 
 
-En el segundo caso, si href es 1 se mantiene en caso de que los pixeles se hayan salido del rango; en el caso contrario en widthimage y DP_RAM_regW se guarda 0 inicializando ROW_CAPTURE.
+En el segundo caso, si href es 1 se mantiene en caso de que los pixeles se hayan salido del rango; en el caso contrario en widthimage y `DP_RAM_regW` se guarda 0 inicializando  `ROW_CAPTURE`.
 
-El tercer estado se mantiene si href es 0. En caso contrario, se inicializa ROW_CAPTURE. 
+El tercer estado se mantiene si href es 0. En caso contrario, se inicializa  `ROW_CAPTURE`. 
 
-La captura inicia cuando hay un flanco positivo en el pclk y href. Cuando esto pasa y pixel_half es 0 en temp_rgb se guardan los datos de data y en DP_RAM_regW se guarda 0, con lo cual no se autoriza. De lo contrario la dirección de salida se aumenta en 1, en temp_rgb se guarda data, en DP_RAM_data_out se guardan los tres posibiles registros de temp_rgb, se autoriza la escritura en buffer_dp_ram guardando 1 en DP_RAM_regW y se aumenta el ancho de la imagen. En caso de que se alcance el máximo tamaño se guarda en FSM_state DATA_OUT_RANGE. En caso contrario, se inicializa WAIT_FRAME_START.
+La captura inicia cuando hay un flanco positivo en el pclk y href. Cuando esto pasa y pixel_half es 0 en temp_rgb se guardan los datos de data y en  `DP_RAM_regW` se guarda 0, con lo cual no se autoriza. De lo contrario la dirección de salida se aumenta en 1, en temp_rgb se guarda data, en  `DP_RAM_data_out` se guardan los tres posibiles registros de temp_rgb, se autoriza la escritura en buffer_dp_ram guardando 1 en  `DP_RAM_regW ` y se aumenta el ancho de la imagen. En caso de que se alcance el máximo tamaño se guarda en  `FSM_state `  `DATA_OUT_RANGE`. En caso contrario, se inicializa  `WAIT_FRAME_START `.
 
 Si href es 0 se aumenta el tamaño de la longitud de una pantalla; en caso de que se alcance el tamaño de longitud máxima se guarda en FSM_state DONE. 
  
@@ -51,7 +51,8 @@ En este caso lo que se hace es tomar los bits más significativos de temp_rgb de
 <img src="https://github.com/unal-edigital2-2019-2/work01-camara-grupo-2/blob/master/docs/figs/t_cam.png?raw=true" width = "250">
 
 - Se le agregó el módulo del captura_datos_downsampler.
-Esto se hace instanciado sus variables de entrada: data, vsync, href y pclk. Y sus variables de salida: DP_RAM_addr_out, DP_RAM_data_out y DP_RAM_regW. 
+Esto se hace instanciado sus variables de entrada: data, vsync, href y pclk. Y sus variables de salida:  `DP_RAM_addr_out `, 
+`DP_RAM_data_out` y  `DP_RAM_regW. ` 
 
 ## Segunda entrega
 Para esta segunda entrega, se nos pidió hacer lo siguiente:
@@ -124,11 +125,13 @@ Para esta entrega se nos pide:
 
 <img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true" width = "250">
 
+#### Descripción
 
 Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, 2 son señales de control y 2 son cadenas de caracteres
 que indican la dirección y los datos enviados por la cámara. Las salidas son las señales de sincronización de la VGA, un reloj, el status,
 los datos que se envían a la VGA, data_mem es la salida de los datos y `CAM_reset` y `CAM_pwdw` son pines. 
 
+Tiene 7 wires, tres son relojaes de distintas frecuencias (32M, 25M y 24M), 1 indica una dirección, 1 tiene el dato del `cam_read`, 1 wire que indica cunado hay un pixel completo y 1 wire de salida del driver VGA al puerto.  
 
 
 ### Cam_read
@@ -152,7 +155,7 @@ Posteriormente, se inicializan los siguientes registros:
 <img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/init_reg_cam_read.png?raw=true" width = "250">
 
 
-La captura se compone de tres estados que se evaluan cada vez que hay un flanco de subida del `pclk`; enseguida se guardan en los `vsync_old` y `href_old` los valores de `vsync` y `href`, respectivamente; y se inicia un case con FSM_state. 
+La captura se compone de tres estados que se evaluan cada vez que hay un flanco de subida del `pclk`; enseguida se guardan en los `vsync_old` y `href_old` los valores de `vsync` y `href`, respectivamente; y se inicia un case con  `FSM_state`. 
 
 Para el primer caso `DONE`, si es un flanco de bajada de vsync , se guardan los siguientes valores: 
 ```verilog
@@ -200,6 +203,8 @@ Después de esto se verifica si las columnas están completas, de ser así:
 FSM_state <= DONE; //Regresa al estado DONE 
 done_image <=1; //Indica que ya se hizo la imagen. 
 ```
+
+Por útlimo, si el  `FSM_state` está en el estado `ROW_CAPTURE` en un flanco de bajada, se mueve el `pixel_half`.
 
 ### Protocolo UART
 

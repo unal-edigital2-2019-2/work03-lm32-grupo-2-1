@@ -13,7 +13,7 @@ Para esta entrega se nos pide:
 
 
 ### Diagrama de caja negra 
-![] (https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png)
+![] (https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true)
 Como se puede ver cuenta con 8 entradas y 11 salidas. De las entradas 4 son relojes, 2 son señales de control y 2 son cadenas de caracteres
 que indican la dirección y los datos enviados por la cámara. Las salidas son las señales de sincronización de la VGA, un reloj, el status,
 los datos que se envían a la VGA, data_mem es la salida de los datos y CAM_reset y CAM_pwdw son pines. 
@@ -23,7 +23,7 @@ los datos que se envían a la VGA, data_mem es la salida de los datos y CAM_rese
 ## Cam_read
 
 ### Diagrama de caja negra
-![] (https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png)
+![] (https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true)
 
 ### Máquina de estados
 

@@ -244,7 +244,7 @@ Cada una de las señales tiene una función:
 
 ### Resuktados obtenidos:
 
-<video src:["https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Generaci%C3%B3n_imagen_pantalla.mp4" width="320" height="200" controls preload]>
+<video src=["https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Generaci%C3%B3n_imagen_pantalla.mp4" width="320" height="200" controls preload]>
 
 <img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Color_bar.jpeg" width = "550" >
 

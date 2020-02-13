@@ -33,7 +33,7 @@ Funciona con un flanco de subida del reloj y tiene diferentes casos que depende 
 
 Para el primer caso (`DONE`) ya se ha llenado la memoria,  sin embargo como la cámara sigue tomando imagenes; por lo tanto, si vsync es igual a 0 se mantiene el valor de acabado, es decir no se ha iniciado el proceso de gardar en memoria una nueva imagen y si no se cumple esto si no que vsync es 1 se inicializan todos los valores de nuevo; se guarda en  `DP_RAM_regW `, en  `DP_RAM_addr_out ` y en lengthimage 0; y se inicializa  `ROW_CAPTURE ` . 
 
-En el segundo caso, si href es 1 se mantiene en caso de que los pixeles se hayan salido del rango; en el caso contrario en widthimage y `DP_RAM_regW` se guarda 0 inicializando  `ROW_CAPTURE`.
+En el segundo caso, si `href`  es 1 se mantiene en caso de que los pixeles se hayan salido del rango; en el caso contrario en widthimage y `DP_RAM_regW` se guarda 0 inicializando  `ROW_CAPTURE`.
 
 El tercer estado se mantiene si href es 0. En caso contrario, se inicializa  `ROW_CAPTURE`. 
 
@@ -118,7 +118,7 @@ Esto lo interpretamos como puntos que quedaron sin información en la memoria ra
 Para esta entrega se nos pide: 
 - Integrar por medio de Litex el controlador de la cámara.
 
-### test_cam 
+### test_cam.v 
 
 
 #### Diagrama de caja negra 
@@ -134,7 +134,7 @@ los datos que se envían a la VGA, data_mem es la salida de los datos y `CAM_res
 Tiene 7 wires, tres son relojaes de distintas frecuencias (32M, 25M y 24M), 1 indica una dirección, 1 tiene el dato del `cam_read`, 1 wire que indica cunado hay un pixel completo y 1 wire de salida del driver VGA al puerto.  
 
 
-### Cam_read
+### Cam_read.v
 
 #### Diagrama de caja negra
 
@@ -239,3 +239,14 @@ Cada una de las señales tiene una función:
 - `STB_O` se usa cuando el maestro le quiere hacer saber al esclavo que un envío de datos está el proreso
 - El esclavo le indica al maestro que ya ha recibido los datos a traves de `ACK_O` a `ACK_I` (de esclavo a maestro)
 - Para indicar que los datos han sido capturados o que se ha visto un ciclo, se usa la señal `CYC_O` (de maestro a esclavo)
+
+
+
+### Resuktados obtenidos:
+
+<video src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Generaci%C3%B3n_imagen_pantalla.mp4" width="320" height="200" controls preload></video>
+
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Color_bar.jpeg" width = "550" >
+
+
+

@@ -13,6 +13,134 @@ Usando una cámara OV7670 generar una captura de color que será procesada por e
 
 ### SoC
 El sitio donde se unen todos los periféricos que se conectan por medio del puente Wishbone para poder recibir las intrucciones del procesador LM32.
+#### Diagrama de bloques: 
+#### Funcionamiento: 
+
+``` python
+from abc import ABC
+
+from migen import *
+
+from migen.genlib.io import CRG
+
+from litex.build.generic_platform import *
+from litex.build.xilinx import XilinxPlatform
+
+import litex.soc.integration.soc_core as SC
+from litex.soc.integration.builder import *
+
+from CAMMaster import CAM_Master
+```
+En este fragmento se importan los elementos necesarios para el funcionamiento del SoC. 
+
+```Python
+_io = [
+
+    ("clk32", 0, Pins("E3"), IOStandard("LVCMOS33")),
+
+    ("cpu_reset", 0, Pins("C12"), IOStandard("LVCMOS33")),
+
+  ("serial", 0,
+    Subsignal("tx", Pins("D4")),
+    Subsignal("rx", Pins("C4")),
+     IOStandard("LVCMOS33"),
+     ),
+
+```
+
+Se asignan los pines para el reloj, el reset y el puerto UART. 
+
+``` Python
+   ("cam_master", 0,
+     Subsignal("CAM_pclk", Pins("P15")),
+     Subsignal("CAM_href", Pins("G14")),
+     Subsignal("CAM_vsync", Pins("V11")),
+     Subsignal("CAM_xclk", Pins("V15")),
+     Subsignal("CAM_pwdn", Pins("K16")),
+     Subsignal("CAM_reset", Pins("R16")),
+     Subsignal("Cam_px_data_0", Pins("B13")),
+     Subsignal("Cam_px_data_1", Pins("F14")),
+     Subsignal("Cam_px_data_2", Pins("D17")),
+     Subsignal("Cam_px_data_3", Pins("E17")),
+     Subsignal("Cam_px_data_4", Pins("G13")),
+     Subsignal("Cam_px_data_5", Pins("C17")),
+     Subsignal("Cam_px_data_6", Pins("D18")),
+     Subsignal("Cam_px_data_7", Pins("E18")),
+     IOStandard("LVCMOS33"))
+]
+```
+Se asignan los datos a la FPGA. 
+
+### main.c
+
+``` c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include <irq.h>
+#include <uart.h>
+#include <console.h>
+#include <generated/csr.h>
+```
+Se llaman a las bibliotecas necesarias para el funcionamiento de todas las funciones que se implementarán en el main.
+
+``` c
+#include <stdio.h>
+static void wait(unsigned int ds)
+{
+	timer0_en_write(0);
+	timer0_reload_write(0);
+	timer0_load_write(100000000*ds);
+	timer0_en_write(1);
+	timer0_update_value_write(1);
+	while(timer0_value_read()) timer0_update_value_write(1);
+}
+
+```
+Se define la función de esperar.
+
+``` c
+int main(void)
+{
+	irq_setmask(0);
+	irq_setie(1);
+	uart_init();
+
+uint8_t color=0;
+uint8_t done=0;
+	
+	
+
+	puts("\n iniciando ejemplo del proyecto con lm32 "__DATE__" "__TIME__"\n");
+
+	
+	while(1) {
+			
+		color = cam_result_read();
+		done = cam_done_read();
+		if(done){
+				switch (color){
+	 				case 1: printf("Azul \n"); break;
+	 				case 2: printf("Verde \n"); break;
+	 				case 4: printf("Rojo \n"); break;
+	 				case 7: printf("Ninguno \n"); break;
+				}
+		}
+        //printf("Color: %d  \n", color);
+	//printf("Done: %d  \n", done);
+	//printf("Error: %d  \n", error);
+	cam_init_write(1);
+	wait(10);
+	cam_init_write(0);
+	wait(90);
+	
+	}
+	return 0;
+}
+
+```
+Función principal donde se definen e inicializan todos los valores por, también se llaman las funciones a utilizar del `.h` y se indica todos los procedimientos que el procesador debe realizar. En este caso, se observa que leerá los datos que envie el módulo analizador y después los imprimira en pantalla. 
 
 ## Módulos
 ### test_cam.v 

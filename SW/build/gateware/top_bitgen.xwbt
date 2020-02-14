@@ -1,0 +1,7 @@
+INFILE=/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/build/gateware/top.ncd
+OUTFILE=/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/build/gateware/top.bit
+FAMILY=Artix7
+PART=xc7a100t-1csg324
+WORKINGDIR=/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/build/gateware
+LICENSE=WebPack
+USER_INFO=211725040_0_0_612

@@ -395,7 +395,13 @@ Cada una de las señales tiene una función:
 ## Analizador de datos
 
 ### Mapa de memoria: 
+El mapa de memoria se puede ver a continuación:
 
+El mapa de cada periférico:
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/reg1.jpeg" width = "550">
+
+Los registros independientes de cada periférico:
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/reg2.jpeg" width = "550">
 
 ## Resultados obtenidos:
 

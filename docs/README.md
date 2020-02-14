@@ -162,66 +162,84 @@ Función principal donde se definen e inicializan todos los valores por, tambié
 
 #### Descripción
 
-Tiene como entradas: `init`, `pclk`, `rst`, `vsync`, `href`, `px_data` y como salidas los registros: `mem_px_addr`, `mem_px_data`, `px_wr` y `done_image`.
+Tiene como entradas: `init`, `pclk`, `rst`, `vsync`, `href`, `px_data` y como salidas los registros: `mem_px_addr`, `mem_px_data`, `px_wr` y `done`.
 
-Internamente se tienen los siguientes registros: `FSM_state`, `pixel_half`, `temp_rgb`, `widthimage`, `lenghtimage`, `mem_px_RG`, `vsync_old` y `href_old`.
+Internamente se tienen los siguientes registros: `FSM_state`, `pixel_half`, `widthimage`, `lenghtimage`, `init_old`, `vsync_old` y `href_old`.
 
-Y los parámetros locales: `Maxwidhtimage`, `Maxlenghtimage`, `WAIT_FRAME_START`, `ROW_CAPTURE`, `DATA_OUT_RANGE`, `DONE`.
+Y los parámetros locales: `Maxwidhtimage`, `Maxlenghtimage`, `Maxaddr` `WAIT_FRAME_START`, `ROW_CAPTURE`, `DATA_OUT_RANGE`, `DONE`.
 
-Posteriormente, se inicializan los siguientes registros: 
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/init_reg_cam_read.png?raw=true" width = "250">
+Se inicia con un ciclo positivo de `pclk` , en el cuales los valores se llevan a su estado inicial.
 
-
+``` verilog
+always@(posedge pclk)begin 
+if(rst)begin
+mem_px_addr = 0;
+FSM_state = 2;
+done = 0;
+pixel_half = 0;
+```
 La captura se compone de tres estados que se evaluan cada vez que hay un flanco de subida del `pclk`; enseguida se guardan en los `vsync_old` y `href_old` los valores de `vsync` y `href`, respectivamente; y se inicia un case con  `FSM_state`. 
 
-Para el primer caso `DONE`, si es un flanco de bajada de vsync , se guardan los siguientes valores: 
+
+El primer caso es el estado `DONE`; en el cual se espera un flanco de bajada de vsync para la sincronización de la imagen.
+
 ```verilog
-mem_px_data <= -1 ;
-px_wr <= 0;
-lenghtimage <=0;
+mem_px_addr = 0;
+lengthimage = 0;
+if(!vsync && vsync_old)begin 
+FSM_state = WAIT_FRAME_START;				
+end else begin
+	FSM_state = DONE;
 ```
-
-Para el segundo estado `WAIT_FRAME_START`, se espera el flanco de subida en href. Tal y como se dice en la datasheet, cada dos flancos de subida de href se lee un pixel en  RGB565. Para este caso:
-
+El siguiente estado es WAIT_FRAME_START se espera el flanco de subida en href. Tal y como se dice en la datasheet, cada dos flancos de subida de href se lee un pixel en  RGB565. Para este caso:
 ```verilog
-px_wr <= 0;
+WAIT_FRAME_START: begin // Ya hubo un flanco de bajada en vsync ahora esero a flanco de subida en href, tal como especifica el datasheet
+				if(!href_old && href )begin
+				FSM_state = ROW_CAPTURE;
+				mem_px_data[7:2] = {px_data[7:5], px_data[2:0]};
+				px_wr = 0 ;
+				pixel_half = ~pixel_half;
+				end else begin
+					if (vsync && !vsync_old ) begin
+					done  = 1;
+					FSM_state = DONE;
+					end else begin
+						FSM_state =WAIT_FRAME_START;
+
 ```
 El último estado es `ROW_CAPTURE`, para el cual se tiene que:
-Si el registro `pixel_half` es igual a 0: 
 
-```verilog
-temp_rgb [15:8] <= px_data;
-px_wr <= 0;
+```VERILOG
+ROW_CAPTURE: begin 
+				if (href) begin  
+					if ( pixel_half == 0) begin
+						mem_px_data[7:2] = {px_data[7:5], px_data[2:0]};
+						px_wr = 0;
+					end else begin
+						mem_px_data[1:0] = {px_data[4:3]}; //Completamos concatenacion a RGB332
+						px_wr = #1 1;
+						
+						mem_px_addr = mem_px_addr + 1 ;
+						widthimage = widthimage + 1 ;
+						
+								if (widthimage  > Maxwidthimage) begin
+								widthimage = 0 ;
+								lengthimage = lengthimage + 1 ;
+								FSM_state = WAIT_FRAME_START;
+									if(lengthimage > Maxlengthimage)begin
+									done  = 1; 
+									mem_px_addr = 0;
+									FSM_state = DONE; 
+									end	
+								end 
+								
+				    end	
 ```
 
-En caso de que  `pixel_half` sea diferente de 0:
 
-```verilog
-mem_px_addr <= mem_px_addr + 1;
-temp_rgb [7:0] <= px_data;
-mem_px_RG <= {temp_rgb[15:13], temp_rgb[10:8]}; 
-mem_px_data <= {mem_px_RG,temp_rgb[4:3]}; 
-px_wr <= 1;
-widthimage <= widthimage + 1;
-```
-Además, en este case también se evalua si se completo toda la captura. Esto se revisa mirando las dimensiones máximas de la imagen que se va a capturar. 
 
-Para esto, primero se mire si la fila ya está completa; en caso de que sea así se tiene: 
 
-```verilog
-widthimage <= 0 ;
-lengthimage <= lengthimage + 1;
 
-```
-
-Después de esto se verifica si las columnas están completas, de ser así:
-
-```verilog
-FSM_state <= DONE; //Regresa al estado DONE 
-done_image <=1; //Indica que ya se hizo la imagen. 
-```
-
-Por útlimo, si el  `FSM_state` está en el estado `ROW_CAPTURE` en un flanco de bajada, se mueve el `pixel_half`.
 
 #### Primera Entrega: Captura de datos con la cámara.
 #### Introducción:
@@ -393,17 +411,48 @@ Cada una de las señales tiene una función:
 - Para indicar que los datos han sido capturados o que se ha visto un ciclo, se usa la señal `CYC_O` (de maestro a esclavo)
 
 ## Analizador de datos
+En este caso, lo que se hace es tomar el bit más significativo de cada color, y sumar uno en un contador por cada vez que se tenga ese bit o en rojo o en verde o en azul. Después de eso se agrega entregan 3 bits que nos indican que valor es.
+
+```verilog
+always @(posedge clk) begin
+    if (rst) begin
+		Done <= 0;	
+		count = 0;
+		totr = 0;
+		totg = 0;
+		totb = 0;
+	end else begin  
+            if(sum) begin
+            if (dator[7] == 1 && dator[4] == 0 && dator[1] == 0) begin
+            totr = totr + 1;
+        end else if (dator[7] == 0 && dator[4] == 1 && dator[1] == 0) begin
+            totg = totg + 1;
+        end else if (dator[7] == 0 && dator[4] == 0 && dator[1] == 1) begin
+            totb = totb + 1;
+        end 
+        always@(negedge clk)begin
+	        if(sum)begin
+		        if((totr > totg)&&(totr > totb))begin
+		        valor = 3'b100;
+		        end else begin
+		            if((totg > totr)&&(totg > totb))begin
+		            valor = 3'b010;
+		            end else begin
+		                if((totb > totr)&&(totb > totg))begin
+		                    valor = 3'b001;
+		                end else begin
+	                         valor = 3'b000;
+	                        end else begin 
+                                if (count < 19200) begin
+                                    count= count+1;
+                                    addr <= addr+1;
+                                    end else begin
+                                    count=0;
+                                    Done = 0;
+```
 
 ### Mapa de memoria: 
-El mapa de memoria se puede ver a continuación:
 
-El mapa de cada periférico:
-
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/regs1.png" width = "400">
-
-Los registros independientes de cada periférico:
-
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/regs2.png" width = "550">
 
 ## Resultados obtenidos:
 

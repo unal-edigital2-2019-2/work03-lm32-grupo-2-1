@@ -29,12 +29,12 @@ end
 
 //	 Lectura  de la memoria port 2 
 always @(posedge clk_r) begin 
-		data_out <= ram[addr_out]; 
+		data_out <= ram[addr_out];
 end
 
 
 initial begin
-	//$readmemh(imageFILE, ram);
+	$readmemh(imageFILE, ram);
 	ram[15'b111111111111111]=8'b11111111;
 	
 end

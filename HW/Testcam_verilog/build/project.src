@@ -1,0 +1,5 @@
+verilog work ../test_cam.v
+verilog work ../VGA_driver.v
+verilog work ../buffer_ram_dp.v
+verilog work ../cam_read.v
+verilog work ../clk24_25_nexys4.v

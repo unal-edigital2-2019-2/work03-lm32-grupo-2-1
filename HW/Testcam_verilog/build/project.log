@@ -1,0 +1,633 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "project.src"
+Input Format                       : mixed
+
+---- Target Parameters
+Target Device                      : xc7a100t-3CSG324
+Output File Name                   : "project.ngc"
+Output Format                      : NGC
+
+---- Source Options
+Top Module Name                    : test_cam
+
+---- General Options
+Optimization Goal                  : Area
+Optimization Effort                : 1
+RTL Output                         : yes
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Analyzing Verilog file "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/test_cam.v" into library work
+Parsing module <test_cam>.
+Analyzing Verilog file "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/VGA_driver.v" into library work
+Parsing module <VGA_Driver640x480>.
+Analyzing Verilog file "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/buffer_ram_dp.v" into library work
+Parsing module <buffer_ram_dp>.
+Analyzing Verilog file "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/cam_read.v" into library work
+Parsing module <cam_read>.
+Analyzing Verilog file "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" into library work
+Parsing module <clk24_25_nexys4>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+WARNING:HDLCompiler:1016 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/test_cam.v" Line 105: Port LOCKED is not connected to this instance
+
+Elaborating module <test_cam>.
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/test_cam.v" Line 93: Assignment to switch ignored, since the identifier is never used
+
+Elaborating module <clk24_25_nexys4>.
+
+Elaborating module <BUFG>.
+
+Elaborating module <MMCME2_ADV(BANDWIDTH="OPTIMIZED",CLKOUT4_CASCADE="FALSE",COMPENSATION="ZHOLD",STARTUP_WAIT="FALSE",DIVCLK_DIVIDE=1,CLKFBOUT_MULT_F=12.0,CLKFBOUT_PHASE=0.0,CLKFBOUT_USE_FINE_PS="FALSE",CLKOUT0_DIVIDE_F=48.0,CLKOUT0_PHASE=0.0,CLKOUT0_DUTY_CYCLE=0.5,CLKOUT0_USE_FINE_PS="FALSE",CLKOUT1_DIVIDE=50,CLKOUT1_PHASE=0.0,CLKOUT1_DUTY_CYCLE=0.5,CLKOUT1_USE_FINE_PS="FALSE",CLKIN1_PERIOD=10.0,REF_JITTER1=0.01)>.
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 132: Assignment to clkfboutb_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 134: Assignment to clkout0b_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 136: Assignment to clkout1b_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 137: Assignment to clkout2_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 138: Assignment to clkout2b_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 139: Assignment to clkout3_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 140: Assignment to clkout3b_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 141: Assignment to clkout4_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 142: Assignment to clkout5_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 143: Assignment to clkout6_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 155: Assignment to do_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 156: Assignment to drdy_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 162: Assignment to psdone_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 165: Assignment to clkinstopped_unused ignored, since the identifier is never used
+WARNING:HDLCompiler:1127 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v" Line 166: Assignment to clkfbstopped_unused ignored, since the identifier is never used
+
+Elaborating module <buffer_ram_dp(AW=15,DW=8)>.
+
+Elaborating module <VGA_Driver640x480>.
+WARNING:HDLCompiler:413 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/VGA_driver.v" Line 68: Result of 10-bit expression is truncated to fit in 9-bit target.
+WARNING:HDLCompiler:413 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/VGA_driver.v" Line 72: Result of 11-bit expression is truncated to fit in 10-bit target.
+
+Elaborating module <cam_read>.
+WARNING:HDLCompiler:413 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/cam_read.v" Line 84: Result of 16-bit expression is truncated to fit in 15-bit target.
+WARNING:HDLCompiler:413 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/cam_read.v" Line 87: Result of 16-bit expression is truncated to fit in 15-bit target.
+WARNING:HDLCompiler:413 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/test_cam.v" Line 189: Result of 18-bit expression is truncated to fit in 15-bit target.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <test_cam>.
+    Related source file is "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/test_cam.v".
+        CAM_SCREEN_X = 160
+        CAM_SCREEN_Y = 120
+WARNING:Xst:647 - Input <sw> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+INFO:Xst:3210 - "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/test_cam.v" line 105: Output port <LOCKED> of the instance <clk25_24> is unconnected or connected to loadless signal.
+    Found 17-bit adder for signal <n0025> created at line 189.
+    Found 9x8-bit multiplier for signal <n0031> created at line 189.
+    Found 10-bit comparator greater for signal <GND_1_o_VGA_posX[9]_LessThan_4_o> created at line 185
+    Found 9-bit comparator greater for signal <GND_1_o_VGA_posY[8]_LessThan_5_o> created at line 185
+    Summary:
+	inferred   1 Multiplier(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   2 Comparator(s).
+	inferred   1 Multiplexer(s).
+Unit <test_cam> synthesized.
+
+Synthesizing Unit <clk24_25_nexys4>.
+    Related source file is "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/clk24_25_nexys4.v".
+    Summary:
+	no macro.
+Unit <clk24_25_nexys4> synthesized.
+
+Synthesizing Unit <buffer_ram_dp>.
+    Related source file is "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/buffer_ram_dp.v".
+        AW = 15
+        DW = 8
+        imageFILE = "image.mem"
+    Found 32768x8-bit dual-port RAM <Mram_ram> for signal <ram>.
+    Found 8-bit register for signal <data_out>.
+    Summary:
+	inferred   1 RAM(s).
+	inferred   8 D-type flip-flop(s).
+Unit <buffer_ram_dp> synthesized.
+
+Synthesizing Unit <VGA_Driver640x480>.
+    Related source file is "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/VGA_driver.v".
+    Found 9-bit register for signal <countY>.
+    Found 10-bit register for signal <countX>.
+    Found 9-bit adder for signal <countY[8]_GND_6_o_add_10_OUT> created at line 68.
+    Found 10-bit adder for signal <countX[9]_GND_6_o_add_11_OUT> created at line 72.
+    Found 10-bit comparator greater for signal <countX[9]_PWR_6_o_LessThan_3_o> created at line 50
+    Found 10-bit comparator lessequal for signal <n0004> created at line 52
+    Found 10-bit comparator greater for signal <countX[9]_PWR_6_o_LessThan_6_o> created at line 52
+    Found 9-bit comparator lessequal for signal <n0009> created at line 53
+    Found 9-bit comparator greater for signal <countY[8]_PWR_6_o_LessThan_8_o> created at line 53
+    Found 10-bit comparator greater for signal <n0014> created at line 62
+    Summary:
+	inferred   2 Adder/Subtractor(s).
+	inferred  19 D-type flip-flop(s).
+	inferred   6 Comparator(s).
+	inferred   1 Multiplexer(s).
+Unit <VGA_Driver640x480> synthesized.
+
+Synthesizing Unit <cam_read>.
+    Related source file is "/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/cam_read.v".
+        AW = 15
+    Found 1-bit register for signal <done>.
+    Found 15-bit register for signal <mem_px_addr>.
+    Found 1-bit register for signal <px_wr>.
+    Found 8-bit register for signal <mem_px_data>.
+    Found 1-bit register for signal <countData>.
+    Found 15-bit register for signal <count>.
+    Found 1-bit register for signal <init_old>.
+    Found 1-bit register for signal <vsync_old>.
+    Found 2-bit register for signal <start>.
+    Found 15-bit adder for signal <mem_px_addr[14]_GND_7_o_add_11_OUT> created at line 84.
+    Found 15-bit adder for signal <count[14]_GND_7_o_add_12_OUT> created at line 87.
+    Found 2-bit comparator greater for signal <GND_7_o_start[1]_LessThan_3_o> created at line 60
+    Found 15-bit comparator lessequal for signal <n0014> created at line 67
+    Summary:
+	inferred   2 Adder/Subtractor(s).
+	inferred  45 D-type flip-flop(s).
+	inferred   2 Comparator(s).
+	inferred  11 Multiplexer(s).
+Unit <cam_read> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 1
+ 32768x8-bit dual-port RAM                             : 1
+# Multipliers                                          : 1
+ 9x8-bit multiplier                                    : 1
+# Adders/Subtractors                                   : 5
+ 10-bit adder                                          : 1
+ 15-bit adder                                          : 2
+ 17-bit adder                                          : 1
+ 9-bit adder                                           : 1
+# Registers                                            : 12
+ 1-bit register                                        : 5
+ 10-bit register                                       : 1
+ 15-bit register                                       : 2
+ 2-bit register                                        : 1
+ 8-bit register                                        : 2
+ 9-bit register                                        : 1
+# Comparators                                          : 10
+ 10-bit comparator greater                             : 4
+ 10-bit comparator lessequal                           : 1
+ 15-bit comparator lessequal                           : 1
+ 2-bit comparator greater                              : 1
+ 9-bit comparator greater                              : 2
+ 9-bit comparator lessequal                            : 1
+# Multiplexers                                         : 13
+ 1-bit 2-to-1 multiplexer                              : 8
+ 15-bit 2-to-1 multiplexer                             : 4
+ 8-bit 2-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+Synthesizing (advanced) Unit <VGA_Driver640x480>.
+The following registers are absorbed into counter <countX>: 1 register on signal <countX>.
+The following registers are absorbed into counter <countY>: 1 register on signal <countY>.
+Unit <VGA_Driver640x480> synthesized (advanced).
+
+Synthesizing (advanced) Unit <buffer_ram_dp>.
+INFO:Xst:3226 - The RAM <Mram_ram> will be implemented as a BLOCK RAM, absorbing the following register(s): <data_out>
+    -----------------------------------------------------------------------
+    | ram_type           | Block                               |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 32768-word x 8-bit                  |          |
+    |     mode           | write-first                         |          |
+    |     clkA           | connected to signal <clk_w>         | rise     |
+    |     weA            | connected to signal <regwrite>      | high     |
+    |     addrA          | connected to signal <addr_in>       |          |
+    |     diA            | connected to signal <data_in>       |          |
+    -----------------------------------------------------------------------
+    | optimization       | area                                |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 32768-word x 8-bit                  |          |
+    |     mode           | write-first                         |          |
+    |     clkB           | connected to signal <clk_r>         | rise     |
+    |     addrB          | connected to signal <addr_out>      |          |
+    |     doB            | connected to signal <data_out>      |          |
+    -----------------------------------------------------------------------
+    | optimization       | area                                |          |
+    -----------------------------------------------------------------------
+Unit <buffer_ram_dp> synthesized (advanced).
+
+Synthesizing (advanced) Unit <cam_read>.
+The following registers are absorbed into counter <count>: 1 register on signal <count>.
+Unit <cam_read> synthesized (advanced).
+
+Synthesizing (advanced) Unit <test_cam>.
+	Multiplier <Mmult_n0031> in block <test_cam> and adder/subtractor <Madd_n0025_Madd> in block <test_cam> are combined into a MAC<Maddsub_n0031>.
+Unit <test_cam> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 1
+ 32768x8-bit dual-port block RAM                       : 1
+# MACs                                                 : 1
+ 9x8-to-15-bit MAC                                     : 1
+# Adders/Subtractors                                   : 1
+ 15-bit adder                                          : 1
+# Counters                                             : 3
+ 10-bit up counter                                     : 1
+ 15-bit up counter                                     : 1
+ 9-bit up counter                                      : 1
+# Registers                                            : 30
+ Flip-Flops                                            : 30
+# Comparators                                          : 10
+ 10-bit comparator greater                             : 4
+ 10-bit comparator lessequal                           : 1
+ 15-bit comparator lessequal                           : 1
+ 2-bit comparator greater                              : 1
+ 9-bit comparator greater                              : 2
+ 9-bit comparator lessequal                            : 1
+# Multiplexers                                         : 13
+ 1-bit 2-to-1 multiplexer                              : 8
+ 15-bit 2-to-1 multiplexer                             : 4
+ 8-bit 2-to-1 multiplexer                              : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <test_cam> ...
+
+Optimizing unit <cam_read> ...
+
+Optimizing unit <VGA_Driver640x480> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 0) on block test_cam, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 64
+ Flip-Flops                                            : 64
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : project.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 268
+#      GND                         : 1
+#      INV                         : 4
+#      LUT1                        : 50
+#      LUT2                        : 32
+#      LUT3                        : 10
+#      LUT4                        : 11
+#      LUT5                        : 21
+#      LUT6                        : 10
+#      MUXCY                       : 61
+#      VCC                         : 1
+#      XORCY                       : 67
+# FlipFlops/Latches                : 64
+#      FD                          : 2
+#      FDE                         : 38
+#      FDR                         : 9
+#      FDRE                        : 9
+#      FDS                         : 2
+#      FDSE                        : 4
+# RAMS                             : 8
+#      RAMB36E1                    : 8
+# Clock Buffers                    : 5
+#      BUFG                        : 4
+#      BUFGP                       : 1
+# IO Buffers                       : 32
+#      IBUF                        : 12
+#      IBUFG                       : 1
+#      OBUF                        : 19
+# Others                           : 1
+#      MMCME2_ADV                  : 1
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 7a100tcsg324-3 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:              63  out of  126800     0%  
+ Number of Slice LUTs:                  138  out of  63400     0%  
+    Number used as Logic:               138  out of  63400     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:    140
+   Number with an unused Flip Flop:      77  out of    140    55%  
+   Number with an unused LUT:             2  out of    140     1%  
+   Number of fully used LUT-FF pairs:    61  out of    140    43%  
+   Number of unique control sets:        12
+
+IO Utilization: 
+ Number of IOs:                          34
+ Number of bonded IOBs:                  33  out of    210    15%  
+    IOB Flip Flops/Latches:               1
+
+Specific Feature Utilization:
+ Number of Block RAM/FIFO:                8  out of    135     5%  
+    Number using Block RAM only:          8
+ Number of BUFG/BUFGCTRLs:                5  out of     32    15%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+CAM_pclk                           | BUFGP                  | 53    |
+clk25_24/clkout0                   | BUFG                   | 27    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -3
+
+   Minimum period: 2.224ns (Maximum Frequency: 449.701MHz)
+   Minimum input arrival time before clock: 1.988ns
+   Maximum output required time after clock: 1.744ns
+   Maximum combinational path delay: 0.382ns
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'CAM_pclk'
+  Clock period: 2.213ns (frequency: 451.937MHz)
+  Total number of paths / destination ports: 503 / 97
+-------------------------------------------------------------------------
+Delay:               2.213ns (Levels of Logic = 17)
+  Source:            cam_read/mem_px_addr_0 (FF)
+  Destination:       cam_read/mem_px_addr_14 (FF)
+  Source Clock:      CAM_pclk rising
+  Destination Clock: CAM_pclk rising
+
+  Data Path: cam_read/mem_px_addr_0 to cam_read/mem_px_addr_14
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              9   0.361   0.316  cam_read/mem_px_addr_0 (cam_read/mem_px_addr_0)
+     INV:I->O              1   0.113   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_lut<0>_INV_0 (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_lut<0>)
+     MUXCY:S->O            1   0.353   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<0> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<0>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<1> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<1>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<2> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<2>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<3> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<3>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<4> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<4>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<5> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<5>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<6> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<6>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<7> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<7>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<8> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<8>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<9> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<9>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<10> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<10>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<11> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<11>)
+     MUXCY:CI->O           1   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<12> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<12>)
+     MUXCY:CI->O           0   0.023   0.000  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<13> (cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_cy<13>)
+     XORCY:CI->O           1   0.370   0.295  cam_read/Madd_mem_px_addr[14]_GND_7_o_add_11_OUT_xor<14> (cam_read/mem_px_addr[14]_GND_7_o_add_11_OUT<14>)
+     LUT5:I4->O            1   0.097   0.000  cam_read/Mmux_mem_px_addr[14]_mem_px_addr[14]_mux_19_OUT61 (cam_read/mem_px_addr[14]_mem_px_addr[14]_mux_19_OUT<14>)
+     FDE:D                     0.008          cam_read/mem_px_addr_14
+    ----------------------------------------
+    Total                      2.213ns (1.601ns logic, 0.612ns route)
+                                       (72.4% logic, 27.6% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk25_24/clkout0'
+  Clock period: 2.224ns (frequency: 449.701MHz)
+  Total number of paths / destination ports: 290 / 36
+-------------------------------------------------------------------------
+Delay:               2.224ns (Levels of Logic = 2)
+  Source:            VGA640x480/countX_3 (FF)
+  Destination:       VGA640x480/countX_0 (FF)
+  Source Clock:      clk25_24/clkout0 rising
+  Destination Clock: clk25_24/clkout0 rising
+
+  Data Path: VGA640x480/countX_3 to VGA640x480/countX_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              3   0.361   0.703  VGA640x480/countX_3 (VGA640x480/countX_3)
+     LUT6:I0->O            3   0.097   0.305  VGA640x480/n001411 (VGA640x480/n00141)
+     LUT6:I5->O            8   0.097   0.311  VGA640x480/Mcount_countX_val1 (VGA640x480/Mcount_countX_val)
+     FDR:R                     0.349          VGA640x480/countX_0
+    ----------------------------------------
+    Total                      2.224ns (0.904ns logic, 1.320ns route)
+                                       (40.7% logic, 59.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CAM_pclk'
+  Total number of paths / destination ports: 157 / 75
+-------------------------------------------------------------------------
+Offset:              1.988ns (Levels of Logic = 3)
+  Source:            rst (PAD)
+  Destination:       cam_read/done (FF)
+  Destination Clock: CAM_pclk rising
+
+  Data Path: rst to cam_read/done
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            24   0.001   0.482  rst_IBUF (rst_IBUF)
+     LUT2:I0->O            1   0.097   0.683  cam_read/_n0103_SW0 (N6)
+     LUT6:I1->O            1   0.097   0.279  cam_read/_n0103 (cam_read/_n0103)
+     FDRE:R                    0.349          cam_read/done
+    ----------------------------------------
+    Total                      1.988ns (0.544ns logic, 1.444ns route)
+                                       (27.4% logic, 72.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk25_24/clkout0'
+  Total number of paths / destination ports: 21 / 21
+-------------------------------------------------------------------------
+Offset:              1.554ns (Levels of Logic = 2)
+  Source:            rst (PAD)
+  Destination:       VGA640x480/countX_0 (FF)
+  Destination Clock: clk25_24/clkout0 rising
+
+  Data Path: rst to VGA640x480/countX_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            24   0.001   0.796  rst_IBUF (rst_IBUF)
+     LUT6:I0->O            8   0.097   0.311  VGA640x480/Mcount_countX_val1 (VGA640x480/Mcount_countX_val)
+     FDR:R                     0.349          VGA640x480/countX_0
+    ----------------------------------------
+    Total                      1.554ns (0.447ns logic, 1.107ns route)
+                                       (28.8% logic, 71.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk25_24/clkout0'
+  Total number of paths / destination ports: 38 / 10
+-------------------------------------------------------------------------
+Offset:              1.744ns (Levels of Logic = 3)
+  Source:            VGA640x480/countY_6 (FF)
+  Destination:       VGA_Vsync_n (PAD)
+  Source Clock:      clk25_24/clkout0 rising
+
+  Data Path: VGA640x480/countY_6 to VGA_Vsync_n
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDSE:C->Q             5   0.361   0.530  VGA640x480/countY_6 (VGA640x480/countY_6)
+     LUT3:I0->O            1   0.097   0.379  VGA640x480/Vsync_n_SW0 (N10)
+     LUT6:I4->O            1   0.097   0.279  VGA640x480/Vsync_n (VGA_Vsync_n_OBUF)
+     OBUF:I->O                 0.000          VGA_Vsync_n_OBUF (VGA_Vsync_n)
+    ----------------------------------------
+    Total                      1.744ns (0.555ns logic, 1.189ns route)
+                                       (31.8% logic, 68.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'CAM_pclk'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              0.640ns (Levels of Logic = 1)
+  Source:            cam_read/done (FF)
+  Destination:       Done (PAD)
+  Source Clock:      CAM_pclk rising
+
+  Data Path: cam_read/done to Done
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q             1   0.361   0.279  cam_read/done (cam_read/done)
+     OBUF:I->O                 0.000          Done_OBUF (Done)
+    ----------------------------------------
+    Total                      0.640ns (0.361ns logic, 0.279ns route)
+                                       (56.4% logic, 43.6% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Delay:               0.382ns (Levels of Logic = 1)
+  Source:            rst (PAD)
+  Destination:       clk25_24/mmcm_adv_inst:RST (PAD)
+
+  Data Path: rst to clk25_24/mmcm_adv_inst:RST
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            24   0.001   0.382  rst_IBUF (rst_IBUF)
+    MMCME2_ADV:RST             0.000          clk25_24/mmcm_adv_inst
+    ----------------------------------------
+    Total                      0.382ns (0.001ns logic, 0.382ns route)
+                                       (0.3% logic, 99.7% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock CAM_pclk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CAM_pclk       |    2.213|         |         |         |
+---------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock clk25_24/clkout0
+----------------+---------+---------+---------+---------+
+                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+----------------+---------+---------+---------+---------+
+clk25_24/clkout0|    2.224|         |         |         |
+----------------+---------+---------+---------+---------+
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 13.00 secs
+Total CPU time to Xst completion: 10.23 secs
+ 
+--> 
+
+
+Total memory usage is 507564 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   23 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
+

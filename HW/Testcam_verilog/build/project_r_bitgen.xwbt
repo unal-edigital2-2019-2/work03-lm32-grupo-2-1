@@ -1,0 +1,7 @@
+INFILE=/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/build/project_r.ncd
+OUTFILE=/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/build/project_r.bit
+FAMILY=Artix7
+PART=xc7a100t-3csg324
+WORKINGDIR=/home/juandcarrillo/Documents/Digital/Lm32/SoC_litex_past/ejercicios/ejm07-i2c-verilog/Testcam_verilog/build
+LICENSE=WebPack
+USER_INFO=211725040_0_0_612

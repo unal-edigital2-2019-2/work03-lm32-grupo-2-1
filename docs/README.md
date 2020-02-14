@@ -453,9 +453,15 @@ always @(posedge clk) begin
 
 ### Mapa de memoria: 
 
+El mapa de memoria del dispositivo se muestra a continuación:
 
+El mapa de los periféricos principales:
 
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/regs1.png?raw=true" width = "400">
 
+El mapa de los registros de cada periférico:
+
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/regs2.png?raw=true" width = "550">
 
 
 

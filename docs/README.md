@@ -14,7 +14,7 @@ Usando una cámara OV7670 generar una captura de color que será procesada por e
 ### SoC
 El sitio donde se unen todos los periféricos que se conectan por medio del puente Wishbone para poder recibir las intrucciones del procesador LM32.
 #### Diagrama de bloques: 
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/SoC.jpeg" width = "250">
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/SoC.jpeg" width = "550">
 
 
 Se cuenta con dos periféricos: Test_cam y el UART, con el puente Wishbone y el procesador. 

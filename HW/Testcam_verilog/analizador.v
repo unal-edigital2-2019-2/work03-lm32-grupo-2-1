@@ -4,12 +4,13 @@ module analizador(
             input [7:0] data,
             input clk, 
             input init,
-            output reg [15:0] addr,
-            output reg Done,
+            input rst, 
+            output reg [15:0] addr;
+            output reg Done;
             output reg[2:0] valor
 );
 
-reg init_old;
+
 reg sum;
 reg [15:0] count;
 reg [17:0] totr;
@@ -22,7 +23,6 @@ wire [2:0] datab;
 
 initial begin 
 
-        init_old <= 0;
         addr <= 15'h4b00;
         Done <= 0;
         count <= 0;
@@ -30,48 +30,54 @@ initial begin
         totg <= 0;
         totb <= 0;
         end 
-assign datar = data[7:5];
-assign datag = data[4:2];
-assign datab = {data[2:0], 1'b0};
+assign datar = dator[7:5];
+assign datag = dator[4:2];
+assign datab = {dator[2:0]; 1'b0};
 
 always @(posedge clk) begin
-    if(init && !init_old)begin
-			sum <= 1;
-			Done <= 0;
-			totr <= 0;
-			totg <= 0;
-			totb <= 0;
-		end
-    if(sum) begin
-        if(count >= 19200)begin
-			sum <= 0;
-			count <= 0;
-			addr <= 15'h7fff;
-			Done <= 1;
-        if ((totr > totg) && (totr > totb)) begin
-            valor = 3'b100;
-        end else begin
-            if ((totg > totb) && (totg >totr)) begin
-                valor = 3'b010;
-            end else begin 
-                if ((totg > totb) && (totg >totr)) begin
-                    valor = 3'b001;
-                end else begin
-                    valor=3'b111; //Sin dato
+    if (rst) begin
+		Done <= 0;	
+		count = 0;
+		totr = 0;
+		totg = 0;
+		totb = 0;
+	end else begin  
+            if(sum) begin
+            if (dator[7] == 1 && dator[4] == 0 && dator[1] == 0) begin
+            totr = totr + 1;
+        end else if (dator[7] == 0 && dator[4] == 1 && dator[1] == 0) begin
+            totg = totg + 1;
+        end else if (dator[7] == 0 && dator[4] == 0 && dator[1] == 1) begin
+            totb = totb + 1;
+        end 
+        always@(negedge clk)begin
+	        if(sum)begin
+		        if((totr > totg)&&(totr > totb))begin
+		        result = 3'b100;
+		        end else begin
+		            if((totg > totr)&&(totg > totb))begin
+		            result = 3'b010;
+		            end else begin
+		                if((totb > totr)&&(totb > totg))begin
+		                    result = 3'b001;
+		                end else begin
+	                         result = 3'b000;
+	                        end else begin 
+                                if (count < 19200) begin
+                                    count= count+1;
+                                    addr <= addr+1;
+                                    end else begin
+                                    count=0;
+                                    Done = 0;
+                            end
                     end
-                end
-            end
-    end else begin 
-        addr <= addr+1;
-        count <= count+1;
-        totr <= totr+datar;
-        totg <= totg+datag;
-        totb <= totb+datab;
-        Done <=0;
-    end
-end
+               end
+            end            
 
-    init_old=init;
-end
+        end
+    end
+
 
 endmodule
+
+ 

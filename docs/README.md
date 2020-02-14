@@ -14,6 +14,10 @@ Usando una cámara OV7670 generar una captura de color que será procesada por e
 ### SoC
 El sitio donde se unen todos los periféricos que se conectan por medio del puente Wishbone para poder recibir las intrucciones del procesador LM32.
 #### Diagrama de bloques: 
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/SoC.jpeg" width = "250">
+
+
+Se cuenta con dos periféricos: Test_cam y el UART, con el puente Wishbone y el procesador. 
 #### Funcionamiento: 
 
 ``` python
@@ -70,6 +74,8 @@ Se asignan los pines para el reloj, el reset y el puerto UART.
 ]
 ```
 Se asignan los datos a la FPGA. 
+## LM32
+El LM32 es el procesador que permite la implementación del hardware por medio del sotfware.
 
 ### main.c
 
@@ -385,9 +391,6 @@ Cada una de las señales tiene una función:
 - `STB_O` se usa cuando el maestro le quiere hacer saber al esclavo que un envío de datos está el proreso
 - El esclavo le indica al maestro que ya ha recibido los datos a traves de `ACK_O` a `ACK_I` (de esclavo a maestro)
 - Para indicar que los datos han sido capturados o que se ha visto un ciclo, se usa la señal `CYC_O` (de maestro a esclavo)
-
-## LM32
-El LM32 es el procesador que permite la implementación del hardware por medio del sotfware.
 
 ## Analizador de datos
 

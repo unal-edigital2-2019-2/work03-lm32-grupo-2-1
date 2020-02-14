@@ -53,15 +53,15 @@ always @(posedge clk) begin
         always@(negedge clk)begin
 	        if(sum)begin
 		        if((totr > totg)&&(totr > totb))begin
-		        result = 3'b100;
+		        valor = 3'b100;
 		        end else begin
 		            if((totg > totr)&&(totg > totb))begin
-		            result = 3'b010;
+		            valor = 3'b010;
 		            end else begin
 		                if((totb > totr)&&(totb > totg))begin
-		                    result = 3'b001;
+		                    valor = 3'b001;
 		                end else begin
-	                         result = 3'b000;
+	                         valor = 3'b000;
 	                        end else begin 
                                 if (count < 19200) begin
                                     count= count+1;

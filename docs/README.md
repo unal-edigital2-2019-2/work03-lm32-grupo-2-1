@@ -253,7 +253,7 @@ El LM32 es el procesador que permite la implementación del hardware por medio d
 ## Analizador de datos
 ### Código RGB 
 ### Mapa de memoria: 
-
+### SoC
 
 
 ## Resultados obtenidos:

@@ -11,18 +11,22 @@ Usando una cámara OV7670 generar una captura de color que será procesada por e
 
 ## Diagrama de bloques del sistema
 
-## Módulos
+### SoC
+El sitio donde se unen todos los periféricos que se conectan por medio del puente Wishbone para poder recibir las intrucciones del procesador LM32.
 
-### Cam_read.v (Módulo final)
+## Módulos
+### test_cam.v 
+
+#### Cam_read.v (Módulo final)
 
 #### Diagrama de caja negra
 
 <img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/test_cam_caja.png?raw=true" width = "250">
 
 
-### Máquina de estados
+#### Máquina de estados
 
-### Descripción
+#### Descripción
 
 Tiene como entradas: `init`, `pclk`, `rst`, `vsync`, `href`, `px_data` y como salidas los registros: `mem_px_addr`, `mem_px_data`, `px_wr` y `done_image`.
 
@@ -85,7 +89,7 @@ done_image <=1; //Indica que ya se hizo la imagen.
 
 Por útlimo, si el  `FSM_state` está en el estado `ROW_CAPTURE` en un flanco de bajada, se mueve el `pixel_half`.
 
-### Primera Entrega: Captura de datos con la cámara.
+#### Primera Entrega: Captura de datos con la cámara.
 #### Introducción:
 
 Para esta entrega se requiere que la cámara muestre una franja de colores en la pantalla con un tamaño de 176 y 144.
@@ -132,7 +136,7 @@ En este caso lo que se hace es tomar los bits más significativos de temp_rgb de
 Esto se hace instanciado sus variables de entrada: data, vsync, href y pclk. Y sus variables de salida:  `DP_RAM_addr_out `, 
 `DP_RAM_data_out` y  `DP_RAM_regW. ` 
 
-### Segunda entrega
+#### Segunda entrega
 Para esta segunda entrega, se nos pidió hacer lo siguiente:
 
 - Crear el módulo `cam_read.v`, encargado de hacer dos tareas:
@@ -192,11 +196,11 @@ Al acercar la imágen del segundo frame podemos ver lo siguiente:
 Esto lo interpretamos como puntos que quedaron sin información en la memoria ram. Se puede ver a traves de ellos y lo que se ve detras es la imágen del frame anterior.
 
 
-### Tercera Entrega
+
+
+#### Tercera Entrega
 Para esta entrega se nos pide: 
 - Integrar por medio de Litex el controlador de la cámara.
-
-#### test_cam.v 
 
 
 #### Diagrama de caja negra 
@@ -210,8 +214,15 @@ que indican la dirección y los datos enviados por la cámara. Las salidas son l
 los datos que se envían a la VGA, data_mem es la salida de los datos y `CAM_reset` y `CAM_pwdw` son pines. 
 
 Tiene 7 wires, tres son relojaes de distintas frecuencias (32M, 25M y 24M), 1 indica una dirección, 1 tiene el dato del `cam_read`, 1 wire que indica cunado hay un pixel completo y 1 wire de salida del driver VGA al puerto.  
+### Código RGB 
+En este caso, se trabajó en el formato RGB332, pero la cámara envía los datos en el formato RGB565, por lo tanto, es necesario que; para en este caso en partícular, se tomen los bits más significativos del dato de cada color.
 
-## VGA
+### VGA
+Con el objetivo de verificar los datos que, para esta entrega, está enviando la cámara. Se hizo una conexión VGA usando módulo `VGA_driver.v`. Que cuenta con tres entradas (`rst`, `clk` y `pixelIn[7:0]`) y cuatro salidas (`pixelOut`, `Hsync_n`, `Vsync_n`, 
+`[9:0]posX`, `[8:0]posY`). 
+
+<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Color_bar.jpeg" width = "550" >
+
 
 ## Protocolo UART
 
@@ -251,16 +262,14 @@ Cada una de las señales tiene una función:
 El LM32 es el procesador que permite la implementación del hardware por medio del sotfware.
 
 ## Analizador de datos
-### Código RGB 
+
 ### Mapa de memoria: 
-### SoC
 
 
 ## Resultados obtenidos:
 
 <video src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Generaci%C3%B3n_imagen_pantalla.mp4" width="320" height="200">
 
-<img src="https://github.com/unal-edigital2-2019-2/work03-lm32-grupo-2-1/blob/master/docs/figs/Color_bar.jpeg" width = "550" >
 
 
 

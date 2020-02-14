@@ -248,8 +248,11 @@ Cada una de las señales tiene una función:
 - Para indicar que los datos han sido capturados o que se ha visto un ciclo, se usa la señal `CYC_O` (de maestro a esclavo)
 
 ## LM32
+El LM32 es el procesador que permite la implementación del hardware por medio del sotfware.
 
 ## Analizador de datos
+### Código RGB 
+### Mapa de memoria: 
 
 
 
